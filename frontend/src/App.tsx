@@ -10,7 +10,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const response = await axios.post("http://localhost:8000/get_all");
+        const response = await axios.get("http://localhost:8000/get-all");
         setCities(response.data); 
       } catch (error) {
         console.error("Error:", error);
