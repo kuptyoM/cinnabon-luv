@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
-from database import db_get
-from items import City
+from database import db_get_info, db_count_rows, db_get_names
+from classes import ObjectRequest
 
 app = FastAPI()
 
@@ -15,13 +15,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class CityRequest(BaseModel):
-    name: str
+@app.get("/get_all")
+async def get_all():
+    result = db_get_names()
+
+    return result
+
 
 @app.post("/button-click")
-async def button_click(city_request: CityRequest):
-
-    response = db_get(city_request.name)
+async def button_click(obj: ObjectRequest):
+    response = db_get_info(obj.name)
 
     return {
             "name": response[1],

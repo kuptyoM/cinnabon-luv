@@ -1,11 +1,14 @@
 import sqlite3
-from items import City
+from classes import City
+
+TABLE_NAME = "Cities"
 
 def db_init():
         connection = sqlite3.connect('cities.db')
         cursor = connection.cursor()
         
-        cursor.execute('''CREATE TABLE IF NOT EXISTS Cities (
+        cursor.execute(f'''
+                CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NO NULL,
                 country TEXT NO NULL,
@@ -17,7 +20,7 @@ def db_init():
         connection.commit()
         connection.close()
 
-def db_add_data():
+def db_insert_data():
         connection = sqlite3.connect('cities.db')
         cursor = connection.cursor()
 
@@ -44,8 +47,8 @@ def db_add_data():
         Cities = [Rome, Berlin, Paris, London]
 
         for city in Cities:
-                cursor.execute('''
-                        INSERT INTO Cities (name, country, longitude, latitude)
+                cursor.execute(f'''
+                        INSERT INTO {TABLE_NAME} (name, country, longitude, latitude)
                         VALUES (?, ?, ?, ?)
                 ''', 
                 (city.name, city.country, city.longitude, city.latitude)
@@ -54,7 +57,7 @@ def db_add_data():
         connection.commit()
         connection.close()
 
-def db_get(city_name: str):
+def db_get_info(city_name: str):
         connection = sqlite3.connect('cities.db')
         cursor = connection.cursor()
 
@@ -65,3 +68,39 @@ def db_get(city_name: str):
         connection.close()
 
         return list(city)
+
+def db_count_rows():
+    connection = sqlite3.connect('cities.db')
+    cursor = connection.cursor()
+
+    cursor.execute(f'''
+        SELECT COUNT(*)
+        FROM {TABLE_NAME}
+    ''')
+
+    result = int(cursor.fetchone()[0])
+
+    connection.commit()
+    connection.close()
+
+    return result
+
+def db_get_names():
+    connection = sqlite3.connect('cities.db')
+    cursor = connection.cursor()
+
+    cursor.execute(f'''
+        SELECT name
+        FROM {TABLE_NAME}
+    ''')
+
+    names = cursor.fetchall()
+
+    result = []
+    for name in names:
+        result.append(name[0])
+
+    connection.commit()
+    connection.close()
+
+    return result
