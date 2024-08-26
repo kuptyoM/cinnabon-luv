@@ -4,3 +4,4 @@
 !/frontend/*
 
 backend/__pychache__/
+backend/.venv/
