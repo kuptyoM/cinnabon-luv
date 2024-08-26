@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/get_all")
+@app.get("/get-all")
 async def get_all():
     result = db_get_names()
 
