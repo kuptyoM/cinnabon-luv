@@ -1,4 +1,6 @@
-!backend/*
-!frontend/*
+*
 
-test.*
+!/backend/*
+!/frontend/*
+
+backend/__pychache__/
