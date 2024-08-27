@@ -1,34 +1,51 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CityCard from './components/CityCard';
+import ProductCard from './components/ProductCard';
+import Header from "./components/Header";
 
+type TProducts = {
+  name: string,
+  id: number,
+  image_url: string
+}
 
 const App: React.FC = () => {
   
-  const [cities, setCities] = useState<string[]>([])
+  const [products, setProducts] = useState<TProducts[]>([])
 
   useEffect(() => {
-    const fetchCities = async () => {
+    const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:8000/get-all");
-        setCities(response.data); 
+        setProducts(response.data); 
       } catch (error) {
         console.error("Error:", error);
       }
     } 
     
 
-    fetchCities()
+    fetchProducts()
     
   }, [])
-
- 
+ console.log(products[0])
   return (
-    <div className="container mx-auto flex flex-col content-center gap-3">
-      {cities.map((city, index) => (
-        <CityCard name={city} key={index} />
-      ))}
+    <div className="container mx-auto w-3/5">
+      <Header />
+
+      {products[0] ?
+        (<div className="grid grid-cols-3 gap-y-20 justify-items-center">
+          {products.map((product, index) => (
+            <ProductCard name={product.name} imageUrl={product.image_url} key={index}/>
+          ))}
+        </div>)
+      :
+        (<div>Ничего нет</div>)
+      }
+
+        
+      
     </div>
+    
   );
 }
 
