@@ -14,3 +14,4 @@
 backend/__pychache__/
 backend/.venv/
 backend/test/
+Backend/.*
