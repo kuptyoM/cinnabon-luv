@@ -1,11 +1,16 @@
 
+
+# Ignore all files by default 
 *
 
-!/backend/*
-!/frontend/*
-!/backend/src/
+# Unignore all files are nedeed
+!/backend/
+!/backend/**
 
+!/frontend/
+!/frontend/**
 
+# Ignore specific folders
 backend/__pychache__/
 backend/.venv/
 backend/test/
