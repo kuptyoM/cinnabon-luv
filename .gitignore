@@ -3,6 +3,8 @@
 
 !/backend/*
 !/frontend/*
+!/backend/src/
+
 
 backend/__pychache__/
 backend/.venv/
