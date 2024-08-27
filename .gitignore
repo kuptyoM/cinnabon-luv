@@ -13,5 +13,5 @@
 # Ignore specific folders
 backend/__pychache__/
 backend/.venv/
-backend/test/
+backend/tests/
 Backend/.*

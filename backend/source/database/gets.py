@@ -5,23 +5,7 @@ from fastapi.responses import  StreamingResponse
 TABLE_NAME = "Donuts"
 DB_NAME = "shop.db"
 
-# def db_count_rows():
-#     connection = connect('cities.db')
-#     cursor = connection.cursor()
-#
-#     cursor.execute(f'''
-#         SELECT COUNT(*)
-#         FROM {TABLE_NAME}
-#     ''')
-#
-#     result = int(cursor.fetchone()[0])
-#
-#     connection.commit()
-#     connection.close()
-#
-#     return result
-
-def db_get_object(name: str):
+def db_get_all_info_about_obj(name: str):
         connection = connect(DB_NAME)
         cursor = connection.cursor()
 
@@ -33,22 +17,17 @@ def db_get_object(name: str):
 
         return list(city)
 
-def db_get_names():
+def db_get_main_info_about_all():
     connection = connect(DB_NAME)
     cursor = connection.cursor()
 
     cursor.execute(f'''
-        SELECT name
+        SELECT id, name 
         FROM {TABLE_NAME}
     ''')
 
-    names = cursor.fetchall()
+    result = cursor.fetchall()
 
-    result = []
-    for name in names:
-        result.append(name[0])
-
-    connection.commit()
     connection.close()
 
     return result
@@ -65,6 +44,6 @@ def db_get_image(id: int):
     image_data = result[0]
     image_stream = BytesIO(image_data)
 
-    return StreamingResponse(image_stream, media_type="image/jpg")
-
     connection.close()
+
+    return StreamingResponse(image_stream, media_type="image/jpg")

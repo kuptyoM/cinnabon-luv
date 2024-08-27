@@ -1,4 +1,4 @@
 from pydantic import BaseModel
 
-class ObjectRequest(BaseModel):
+class ObjRequest(BaseModel):
         name: str
