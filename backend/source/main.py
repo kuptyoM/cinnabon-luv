@@ -2,7 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from models import ObjRequest
-from database.gets import *
+from database.gets import (db_get_image,
+                           db_get_main_info_about_all,
+                           db_get_all_info_about_obj)
 from config import DOMEN_NAME
 
 app = FastAPI()
