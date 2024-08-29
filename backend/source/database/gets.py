@@ -1,9 +1,9 @@
 from sqlite3 import connect
+
 from io import BytesIO
 from fastapi.responses import  StreamingResponse
 
-TABLE_NAME = "Donuts"
-DB_NAME = "shop.db"
+from database.config import DB_NAME, TABLE_NAME
 
 def db_get_all_info_about_obj(name: str):
         connection = connect(DB_NAME)
@@ -25,7 +25,6 @@ def db_get_main_info_about_all():
         SELECT id, name 
         FROM {TABLE_NAME}
     ''')
-
     result = cursor.fetchall()
 
     connection.close()
