@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from models import ObjRequest
+from models import ObjRequest, User
 from database.gets import (db_get_image,
                            db_get_main_info_about_all,
                            db_get_all_info_about_obj)
@@ -16,6 +16,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.post("/admin")
+async def authentication(obj: User):
+    return {
+        "login": User.login,
+        "password": User.password
+    }
+
+@app.post("/admin")
+async def get_data(obj: ObjRequest):
+    return {
+        "name": ObjRequest.name
+    }
 
 @app.get("/images/{image_id}")
 async def get_image(image_id: int):
