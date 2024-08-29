@@ -1,4 +1,5 @@
 
 uvicorn
-fastapi[standard]
-pydantic
+fastapi[standard]~=0.112.2
+pydantic~=2.8.2
+starlette~=0.38.2

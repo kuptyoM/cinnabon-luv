@@ -1,14 +1,19 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Depends, HTTPException, status, Request
 
-from models import ObjRequest, User
+from models import ObjRequest, LoginData
+
 from database.gets import (db_get_image,
-                           db_get_main_info_about_all,
-                           db_get_all_info_about_obj)
-from config import DOMEN_NAME
+                           db_get_main_info_about_all)
+
+from config import DOMEN_NAME, admin
 
 app = FastAPI()
 
+# Add session middleware to manage login
+from starlette.middleware.sessions import SessionMiddleware
+app.add_middleware(SessionMiddleware, secret_key="12345")
+
+from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -16,19 +21,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-@app.post("/admin")
-async def authentication(obj: User):
-    return {
-        "login": User.login,
-        "password": User.password
-    }
-
-@app.post("/admin")
-async def get_data(obj: ObjRequest):
-    return {
-        "name": ObjRequest.name
-    }
 
 @app.get("/images/{image_id}")
 async def get_image(image_id: int):
@@ -62,24 +54,46 @@ async def get_all():
 
     return result
 
-# get all data about the product
-# Example output:
-# [
-#         {
-#             "id": SAMPLE_ID,
-#             "name": SAMPLE_NAME,
-#             "images_url": [SAMPLE_FILES, ...]
-#         },
-#         {
-#             "id": SAMPLE_ID_2,
-#             "name": SAMPLE_NAME_2,
-#             "images_url": [SAMPLE_FILES_2, ...]
-#         },
-#         ...
-@app.post("/get-obj")
-async def get_obj(obj: ObjRequest):
-    response = db_get_all_info_about_obj(obj.name)
 
+#
+# Admin authentication
+#
+
+# Logging
+@app.post("/admin/login")
+async def admin_login(request: Request, login_data: LoginData):
+    if login_data.login == admin["login"] and login_data.password == admin["password"]:
+        request.session["is_admin"] = True
+        return {
+            "msg": "Login successful"
+        }
+    else:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid login/password")
+
+# Check whether logged admin is
+def admin_required(request: Request):
+    if not request.session.get("is_admin"):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized")
+
+# Not necessary. Get access to admin panel aka Dashboard
+@app.get("/admin/dashboard", dependencies=[Depends(admin_required)])
+async def admin_dashboard():
     return {
-            #return cinnabon data
-            }
+        "msg": "Welcome to the admin dashboard!"
+    }
+
+# Function for admins only
+@app.post("/admin/insert", dependencies=[Depends(admin_required)])
+async def insert_data(data: ObjRequest):
+    return {
+        "msg": "Data inserted successfully",
+        "name": data.name
+    }
+
+# Logging out
+@app.post("/admin/logout")
+async def admin_logout(request: Request):
+    request.session.clear()
+    return {
+        "msg": "Logged out successfully"
+    }
