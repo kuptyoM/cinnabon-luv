@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 
 
 type TProductCardProps = {
@@ -6,7 +6,7 @@ type TProductCardProps = {
     imageUrl: string
 }
 
-const ProductCard: React.FC<TProductCardProps> = ({ name, imageUrl }) => {
+const ProductCard: FC<TProductCardProps> = ({ name, imageUrl }) => {
 
     return(
         <div className="size-72 bg-cyan-200 flex flex-col rounded-3xl cursor-pointer">

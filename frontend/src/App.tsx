@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from './components/ProductCard';
 import Header from "./components/Header";
@@ -9,7 +9,7 @@ type TProducts = {
   image_url: string
 }
 
-const App: React.FC = () => {
+const App: FC = () => {
   
   const [products, setProducts] = useState<TProducts[]>([])
 
@@ -27,7 +27,8 @@ const App: React.FC = () => {
     fetchProducts()
     
   }, [])
- console.log(products[0])
+
+
   return (
     <div className="container mx-auto w-3/5">
       <Header />
@@ -42,7 +43,6 @@ const App: React.FC = () => {
         (<div>Ничего нет</div>)
       }
 
-        
       
     </div>
     

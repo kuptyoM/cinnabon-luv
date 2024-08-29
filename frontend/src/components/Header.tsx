@@ -1,18 +1,24 @@
-import React from "react";
+import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
 
-const Header: React.FC = () => {
+const Header: FC = () => {
+    let navigate = useNavigate();
+
 
     return(
-        <div className="w-full h-20 bg-cyan-100 mb-10 content-center grid grid-cols-9">
+        <header className="w-full h-20 bg-cyan-100 mb-10 flex items-center justify-between absolute top-0 left-0">
             <img src="https://sun1-87.userapi.com/s/v1/ig2/FNRtpu3eyZrePomH3e81-sRLiXUbDNggm049CcesV3WDV-QnK35cROdtzIuYrW9OmEphz91IqgYgZp62HuWLk_Q_.jpg?size=600x600&quality=95&crop=0%2C0%2C600%2C600&ava=1&clckid=62089932" className="col-span-1 size-20" alt="logo"/>
-            <h1 className="content-center text-3xl col-span-2 text-center cursor-pointer">Home</h1>
-            <h1 className="content-center text-3xl col-span-2 text-center cursor-pointer">Find us</h1>
-            <h1 className="content-center text-3xl col-span-2 text-center cursor-pointer">Support</h1>
-            <h1 className="content-center text-3xl col-span-2 text-center cursor-pointer">Admin Panel</h1>
-        </div>
+            <ul className="h-full flex items-center gap-10 mr-16 text-3xl">
+                <li onClick={() => navigate('/', {replace: false})} className="cursor-pointer h-full content-center hover:bg-cyan-500/10 transition-colors ease-in-out duration-500">Home</li>
+                <li className="cursor-pointer h-full content-center hover:bg-cyan-500/10 transition-colors ease-in-out duration-500">Find Us</li>
+                <li className="cursor-pointer h-full content-center hover:bg-cyan-500/10 transition-colors ease-in-out duration-500">Support</li>
+                <li onClick={() => navigate('/admin', {replace: true})} className="cursor-pointer h-full content-center hover:bg-cyan-500/10 transition-colors ease-in-out duration-500">Admin Panel</li>
+            </ul>
+            
+        </header>
     )
 }
 
