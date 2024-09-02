@@ -9,9 +9,14 @@ type TProductCardProps = {
 const ProductCard: FC<TProductCardProps> = ({ name, imageUrl }) => {
 
     return(
-        <div className="size-72 bg-cyan-200 flex flex-col rounded-3xl cursor-pointer">
-            <h1 className="w-full h-1/5 text-center content-center	">{name}</h1>
-            <img src={imageUrl} alt="product img" className="object-fit w-full h-4/5"/>
+        <div className="w-80 h-96 bg-[#FFD49A] flex flex-col cursor-pointer rounded-3xl">
+            
+            <img src={imageUrl} alt="product img" className="h-72"/>
+            <div className="w-full content-center text-left pl-5 pt-5">
+                <h1 className="text-3xl font-bold">{name}</h1>
+                <p className="italic font-serif">100&#36;</p>
+            </div>
+            
         </div>
     )
 }
