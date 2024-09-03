@@ -34,7 +34,7 @@ const App: FC = () => {
     <div className="container mx-auto h-full">
       <Header />
       
-      <div className="border border-solid w-full h-[40vh] bg-cinnabon-pattern1 bg-fixed bg-cover bg-center bg-no-repeat flex justify-center items-center">
+      <div className="border border-solid w-full h-[700px] bg-cinnabon-pattern1 bg-fixed bg-cover bg-center bg-no-repeat flex justify-center items-center">
           <h1 className="font-bold text-5xl text-white font-outline-1 italic font-serif">CINNABON LUV</h1>
       </div>
 
