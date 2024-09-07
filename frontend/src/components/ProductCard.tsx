@@ -9,7 +9,7 @@ type TProductCardProps = {
 const ProductCard: FC<TProductCardProps> = ({ name, imageUrl }) => {
     console.log(imageUrl)
     return(
-        <div className="w-80 h-96 bg-[#E8E7E3] flex flex-col cursor-pointer rounded-3xl">
+        <div className="w-80 h-96 bg-[#E8E7E3] flex flex-col cursor-pointer rounded-3xl border border-solid border-black">
             
             {/* <img src={imageUrl} alt="product img" className="h-72"/> */}
             <div className={`bg-[url(${imageUrl})] h-72 bg-cover bg-center bg-no-repeat`}>
